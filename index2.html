@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wishlist</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f5f5f5;
+      padding: 2rem;
+    }
+    .gift {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .gift img {
+      max-width: 200px;
+      border-radius: 8px;
+    }
+    .gift-details {
+      flex: 1;
+    }
+    .gift-details h3 {
+      margin: 0 0 0.5rem 0;
+    }
+    .gift-details p {
+      margin: 0.25rem 0;
+    }
+    input[type="text"] {
+      padding: 0.5rem;
+      width: 200px;
+      margin-right: 0.5rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Wishlist</h1>
+  <div id="wishlist"></div>
+
+  <script>
+    const BIN_ID = "6834247e8561e97a501b9af2";
+    const API_KEY = "$2a$10$9AWOPjDcqkeAt3vEbNRv6uJGiOHuzf0YdWooGJrLcKxV1f.5NJqbO"; // ⚠️ NEZVEŘEJŇOVAT! Použij např. na backendu.
+    const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+    let wishlistData = [];
+
+    async function fetchWishlist() {
+      const res = await fetch(API_URL, {
+        headers: { "X-Master-Key": API_KEY }
+      });
+      const data = await res.json();
+      wishlistData = data.record.wishlist;
+      renderWishlist();
+    }
+
+    function renderWishlist() {
+      const container = document.getElementById("wishlist");
+      container.innerHTML = "";
+
+      wishlistData.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "gift";
+
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.product}" />
+          <div class="gift-details">
+            <h3><a href="${item.url}" target="_blank">${item.product}</a></h3>
+            <p><strong>Cena:</strong> ${item.price}</p>
+            <p><strong>Zamluveno:</strong> ${item.reservedBy || "zatím nikým"}</p>
+            ${item.reservedBy ? "" : `
+              <input type="text" placeholder="Vaše jméno" id="input-${index}" />
+              <button onclick="reserve(${index})">Zamluvit</button>
+            `}
+          </div>
+        `;
+
+        container.appendChild(div);
+      });
+    }
+
+    async function reserve(index) {
+      const input = document.getElementById(`input-${index}`);
+      const name = input.value.trim();
+      if (!name) return alert("Zadejte prosím své jméno.");
+
+      wishlistData[index].reservedBy = name;
+
+      // Uložit zpět do jsonbin.io
+      const res = await fetch(API_URL, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": API_KEY
+        },
+        body: JSON.stringify({ wishlist: wishlistData })
+      });
+
+      if (res.ok) {
+        alert("Dárek byl úspěšně zamluven!");
+        renderWishlist();
+      } else {
+        alert("Chyba při ukládání, zkuste to znovu.");
+      }
+    }
+
+    fetchWishlist();
+  </script>
+</body>
+</html>
