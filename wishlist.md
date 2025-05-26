@@ -1,51 +1,54 @@
+---
+wishlist:
+  - product: "Apple MacBook Air M3"
+    url: "https://example.com/macbook-air-m3"
+    image: "https://placehold.co/400x300?text=MacBook+Air+M3"
+    price: "35 990 Kč"
+
+  - product: "Sony WH-1000XM5 Sluchátka"
+    url: "https://example.com/sony-wh1000xm5"
+    image: "https://placehold.co/400x300?text=Sony+WH-1000XM5"
+    price: "7 990 Kč"
+
+  - product: "Kindle Paperwhite Signature Edition"
+    url: "https://example.com/kindle-paperwhite-signature"
+    image: "https://placehold.co/400x300?text=Kindle+Paperwhite"
+    price: "4 190 Kč"
+
+  - product: "iPad Air 6. generace"
+    url: "https://example.com/ipad-air-6"
+    image: "https://placehold.co/400x300?text=iPad+Air+6"
+    price: "17 990 Kč"
+
+  - product: "Obsidian Sync Roční předplatné"
+    url: "https://example.com/obsidian-sync"
+    image: "https://placehold.co/400x300?text=Obsidian+Sync"
+    price: "240 Kč/měsíc"
+
+  - product: "Bose SoundLink Revolve+ II"
+    url: "https://example.com/bose-soundlink-revolve-plus-ii"
+    image: "https://placehold.co/400x300?text=Bose+SoundLink+Revolve+II"
+    price: "6 790 Kč"
+
+  - product: "Logitech MX Master 3S"
+    url: "https://example.com/logitech-mx-master-3s"
+    image: "https://placehold.co/400x300?text=Logitech+MX+Master+3S"
+    price: "2 490 Kč"
+
+  - product: "Roční předplatné Adobe Creative Cloud"
+    url: "https://example.com/adobe-creative-cloud"
+    image: "https://placehold.co/400x300?text=Adobe+Creative+Cloud"
+    price: "1 450 Kč/měsíc"
+
+  - product: "Grafický tablet Wacom Intuos Pro Medium"
+    url: "https://example.com/wacom-intuos-pro-medium"
+    image: "https://placehold.co/400x300?text=Wacom+Intuos+Pro+Medium"
+    price: "9 990 Kč"
+
+  - product: "Kniha „Elements of Typographic Style“ od Roberta Bringhursta"
+    url: "https://example.com/elements-of-typographic-style"
+    image: "https://placehold.co/400x300?text=Typographic+Style"
+    price: "890 Kč"
+---
+
 # Wishlist
-
-- Full-frame fotoaparát Sony A7 IV  
-  - https://www.megapixel.cz/sony-alpha-a7-iv  
-  - https://picsum.photos/300/200?random=1  
-  - 69 990 Kč
-
-- Objektiv Sigma 24-70mm f/2.8 DG DN Art  
-  - https://www.megapixel.cz/sigma-24-70mm-f-2-8-dg-dn-art-sony-e  
-  - https://picsum.photos/300/200?random=2  
-  - 29 990 Kč
-
-- Stativ Manfrotto 190XPRO  
-  - https://www.fotoskoda.cz/manfrotto-mt190xpro4-stativ/  
-  - https://picsum.photos/300/200?random=3  
-  - 6 490 Kč
-
-- Fotobatoh Lowepro ProTactic 450 AW II  
-  - https://www.alza.cz/lowepro-protactic-450-aw-ii?dq=5486819  
-  - https://picsum.photos/300/200?random=4  
-  - 5 499 Kč
-
-- Externí blesk Godox V1  
-  - https://www.film-technika.com/godox-v1-s-pro-sony/  
-  - https://picsum.photos/300/200?random=5  
-  - 6 790 Kč
-
-- Kalibrační zařízení X-Rite i1Display Studio  
-  - https://www.megapixel.cz/x-rite-i1-display-studio  
-  - https://picsum.photos/300/200?random=6  
-  - 5 990 Kč
-
-- Přenosný SSD disk Samsung T7 1TB  
-  - https://www.alza.cz/samsung-ssd-t7-1tb-modry-d6226880.htm  
-  - https://picsum.photos/300/200?random=7  
-  - 2 990 Kč
-
-- Fotografický workshop krajiny  
-  - https://www.fotoinstitut.cz/workshopy/workshop-krajina/  
-  - https://picsum.photos/300/200?random=8  
-  - 3 500 Kč
-
-- Adobe Lightroom & Photoshop (roční licence)  
-  - https://www.adobe.com/cz/creativecloud/photography.html  
-  - https://picsum.photos/300/200?random=9  
-  - 3 050 Kč
-
-- Reflektor 5v1 110 cm  
-  - https://www.film-technika.com/odrazna-deska-5v1-110-cm/  
-  - https://picsum.photos/300/200?random=10  
-  - 590 Kč
