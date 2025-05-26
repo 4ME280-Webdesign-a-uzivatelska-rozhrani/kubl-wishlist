@@ -1,82 +1,120 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🎁 Tipy na narozeninové dárky</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dárky k narozeninám</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      color: #333;
-      padding: 2rem;
-      max-width: 900px;
+      font-family: sans-serif;
+      max-width: 800px;
       margin: auto;
-    }
-    h1 {
-      text-align: center;
-      color: #d35400;
+      padding: 1rem;
+      background: #f7f7f7;
+      color: #333;
     }
     .gift {
-      background: #fff;
-      padding: 1.5rem;
+      background: white;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
       border-radius: 10px;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
     }
-    .gift img {
+    img {
       max-width: 100%;
-      border-radius: 8px;
-      margin-top: 1rem;
+      border-radius: 6px;
+      margin-top: 0.5rem;
     }
-    .gift a {
-      font-weight: bold;
-      font-size: 1.1rem;
-      color: #2980b9;
-      text-decoration: none;
-    }
-    .gift p {
+    input {
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      width: 100%;
+      max-width: 300px;
       font-size: 1rem;
-      color: #2c3e50;
+    }
+    button {
+      margin-top: 0.5rem;
+      background: #007bff;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .saved {
+      color: green;
+      margin-top: 0.5rem;
     }
   </style>
 </head>
 <body>
 
-  <h1>🎁 Tipy na narozeninové dárky</h1>
+<h1>🎁 Narozeninové dárky</h1>
+<div id="gift-list">Načítání dárků…</div>
 
-  <div id="gift-container"></div>
+<script>
+const BIN_ID = '683061b78960c979a5a01dba';
+const MASTER_KEY = '$2a$10$qNV2tGipYXuFW3167xxgveC1QFEU7D.1fB.aARUKWmvB2htsyVee6';
+const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const HEADERS = {
+  'X-Master-Key': MASTER_KEY,
+  'Content-Type': 'application/json'
+};
 
-  <script>
-    const API_URL = "https://TVOJE_PROXY_URL.workers.dev"  // <- sem napiš svoji proxy adresu
-    const BIN_ID = "TVŮJ_BIN_ID" // <- sem napiš svůj bin ID z jsonbin.io
+let darky = [];
 
-    async function nactiDarky() {
-      try {
-        const res = await fetch(`${API_URL}?id=${BIN_ID}`);
-        const json = await res.json();
-        const darky = json.record || [];
+async function nactiDarky() {
+  try {
+    const res = await fetch(`${BIN_URL}/latest`, { headers: HEADERS });
+    const data = await res.json();
+    darky = data.record;
+    zobrazDarky();
+  } catch (e) {
+    document.getElementById('gift-list').innerHTML = 'Chyba při načítání dat.';
+    console.error(e);
+  }
+}
 
-        const container = document.getElementById('gift-container');
-        container.innerHTML = '';
+function zobrazDarky() {
+  const container = document.getElementById('gift-list');
+  container.innerHTML = '';
+  darky.forEach((dar, idx) => {
+    const el = document.createElement('div');
+    el.className = 'gift';
+    el.innerHTML = `
+      <h2>${dar.nazev}</h2>
+      <p><strong>Cena:</strong> ${dar.cena}</p>
+      <a href="${dar.odkaz}" target="_blank">Odkaz na dárek</a>
+      <img src="${dar.obrazek}" alt="${dar.nazev}">
+      <p><strong>Zamluveno:</strong> ${dar.koupenoKym || 'zatím nikým'}</p>
+      <input type="text" placeholder="Zadej své jméno" id="kupujici-${idx}" value="${dar.koupenoKym || ''}">
+      <button onclick="ulozKupujiciho(${idx})">Uložit</button>
+      <p class="saved" id="stav-${idx}"></p>
+    `;
+    container.appendChild(el);
+  });
+}
 
-        darky.forEach(darek => {
-          const div = document.createElement('div');
-          div.className = 'gift';
-          div.innerHTML = `
-            <a href="${darek.url}" target="_blank">${darek.nazev}</a>
-            <p><strong>Cena:</strong> ${darek.cena}</p>
-            <img src="${darek.obrazek}" alt="${darek.nazev}">
-          `;
-          container.appendChild(div);
-        });
-      } catch (e) {
-        console.error("Chyba při načítání dat:", e);
-        document.getElementById('gift-container').innerHTML = `<p>⚠️ Nepodařilo se načíst dárky.</p>`;
-      }
-    }
+async function ulozKupujiciho(idx) {
+  const jmeno = document.getElementById(`kupujici-${idx}`).value.trim();
+  darky[idx].koupenoKym = jmeno;
 
-    window.addEventListener('DOMContentLoaded', nactiDarky);
-  </script>
+  try {
+    const res = await fetch(BIN_URL, {
+      method: 'PUT',
+      headers: HEADERS,
+      body: JSON.stringify(darky)
+    });
+    if (!res.ok) throw new Error('Ukládání selhalo');
+    document.getElementById(`stav-${idx}`).textContent = 'Uloženo ✔️';
+  } catch (e) {
+    document.getElementById(`stav-${idx}`).textContent = 'Chyba při ukládání';
+    console.error(e);
+  }
+}
+
+nactiDarky();
+</script>
+
 </body>
 </html>
