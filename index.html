@@ -1,59 +1,93 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>Fotografův wishlist</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
       max-width: 800px;
       margin: 2rem auto;
       padding: 1rem;
-      background-color: #f9f9f9;
+      background-color: #f4f4f4;
     }
     h1 {
       text-align: center;
     }
+    li {
+      margin-bottom: 2rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
     img {
       max-width: 100%;
       height: auto;
-      margin: 10px 0;
-    }
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    li {
-      margin-bottom: 2rem;
-      padding: 1rem;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin: 0.5rem 0;
     }
   </style>
 </head>
 <body>
   <div id="content">Načítání wishlistu...</div>
 
-  <!-- Markdown parser -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    fetch('./wishlist.md')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Nepodařilo se načíst wishlist.md');
-        }
-        return response.text();
-      })
-      .then(markdown => {
-        const html = marked.parse(markdown);
-        document.getElementById('content').innerHTML = html;
-      })
-      .catch(error => {
-        document.getElementById('content').innerHTML =
-          '<p style="color: red;">Chyba: ' + error.message + '</p>';
-      });
+    const markdown = `
+# Wishlist
+
+- Full-frame fotoaparát Sony A7 IV  
+  - https://www.megapixel.cz/sony-alpha-a7-iv  
+  - https://picsum.photos/300/200?random=1  
+  - 69 990 Kč
+
+- Objektiv Sigma 24-70mm f/2.8 DG DN Art  
+  - https://www.megapixel.cz/sigma-24-70mm-f-2-8-dg-dn-art-sony-e  
+  - https://picsum.photos/300/200?random=2  
+  - 29 990 Kč
+
+- Stativ Manfrotto 190XPRO  
+  - https://www.fotoskoda.cz/manfrotto-mt190xpro4-stativ/  
+  - https://picsum.photos/300/200?random=3  
+  - 6 490 Kč
+
+- Fotobatoh Lowepro ProTactic 450 AW II  
+  - https://www.alza.cz/lowepro-protactic-450-aw-ii?dq=5486819  
+  - https://picsum.photos/300/200?random=4  
+  - 5 499 Kč
+
+- Externí blesk Godox V1  
+  - https://www.film-technika.com/godox-v1-s-pro-sony/  
+  - https://picsum.photos/300/200?random=5  
+  - 6 790 Kč
+
+- Kalibrační zařízení X-Rite i1Display Studio  
+  - https://www.megapixel.cz/x-rite-i1-display-studio  
+  - https://picsum.photos/300/200?random=6  
+  - 5 990 Kč
+
+- Přenosný SSD disk Samsung T7 1TB  
+  - https://www.alza.cz/samsung-ssd-t7-1tb-modry-d6226880.htm  
+  - https://picsum.photos/300/200?random=7  
+  - 2 990 Kč
+
+- Fotografický workshop krajiny  
+  - https://www.fotoinstitut.cz/workshopy/workshop-krajina/  
+  - https://picsum.photos/300/200?random=8  
+  - 3 500 Kč
+
+- Adobe Lightroom & Photoshop (roční licence)  
+  - https://www.adobe.com/cz/creativecloud/photography.html  
+  - https://picsum.photos/300/200?random=9  
+  - 3 050 Kč
+
+- Reflektor 5v1 110 cm  
+  - https://www.film-technika.com/odrazna-deska-5v1-110-cm/  
+  - https://picsum.photos/300/200?random=10  
+  - 590 Kč
+    `;
+
+    document.getElementById('content').innerHTML = marked.parse(markdown);
   </script>
 </body>
 </html>
